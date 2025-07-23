@@ -28,7 +28,7 @@ const Section = styled(motion.section)`
 
   position: relative;
 
-  /* background-color: orange; */
+  
 `;
 
 const Title = styled.h1`
@@ -54,7 +54,7 @@ const Title = styled.h1`
 
 const Left = styled.div`
   width: 35%;
-  background-color: ${(props) => props.theme.body};
+  background-color: #022e3dff;
   color: ${(props) => props.theme.text};
 
   min-height: 100vh;
@@ -197,20 +197,13 @@ const Shop = () => {
   return (
     <Section ref={ref} id="shop">
       <Title data-scroll data-scroll-speed="-1">
-        New Collection
+        Titulo ejemplo
       </Title>
       <Left>
         <p>
-          The brand new collection is currently being developed in USA. We
-          create our products using best quality material, including the use of
-          some of the pure fabrics to make our products. All products are made
-          using the best materials, from the finest cotton to the finest
-          fabrics.
+          texto ejemplo
           <br /> <br />
-          We have lots of different clothing options like shoes, jackets and
-          dresses. Not only clothes but we also provide unique Jewellery as
-          well. It is great for us to carry our new clothes all around the
-          country and look different.
+          texto ejemplo
         </p>
       </Left>
       <Right data-scroll ref={Horizontalref}>

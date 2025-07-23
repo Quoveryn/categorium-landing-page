@@ -96,7 +96,6 @@ const Loader = () => {
         alt="Categorium"
       />
       <Text variants={textVariants} initial="hidden" animate="visible">
-        Categorium
       </Text>
     </Container>
   );

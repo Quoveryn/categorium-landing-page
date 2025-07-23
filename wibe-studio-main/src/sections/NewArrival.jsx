@@ -225,7 +225,7 @@ let t1= gsap.timeline();
         <Photos img={img1} name="Denim" />
         <Photos img={img2} name="Cool Dresses" />
         <Photos img={img3} name="Jackets" />
-        <Photos img={img4} name="T-shirts" />
+     
       </Container>
 
       <Text data-scroll data-scroll-speed="-4">
