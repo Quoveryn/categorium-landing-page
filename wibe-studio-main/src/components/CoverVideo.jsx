@@ -59,7 +59,7 @@ const Title = styled(motion.div)`
 
     @media (max-width: 30em) {
       /* font-size: ${(props) => props.theme.fontxxxl}; */
-      font-size: calc(5rem + 8vw);
+      font-size: calc(3rem + 8vw);
     }
   }
   h2 {

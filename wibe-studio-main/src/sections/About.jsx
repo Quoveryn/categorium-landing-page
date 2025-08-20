@@ -1,7 +1,39 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import img1 from "../assets/Images/videoejemploabout.mp4";
+
+// Gradient animation
+const gradient = keyframes`
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+`;
+
+// Wave animation
+const wave = keyframes`
+  2% {
+    transform: translateX(1);
+  }
+  25% {
+    transform: translateX(-25%);
+  }
+  50% {
+    transform: translateX(-50%);
+  }
+  75% {
+    transform: translateX(-25%);
+  }
+  100% {
+    transform: translateX(1);
+  }
+`;
 
 const Section = styled.section`
   min-height: 100vh;
@@ -9,11 +41,42 @@ const Section = styled.section`
   margin: 0;
   position: relative;
   display: flex;
-  background-color: #022e3dff;
+  background: linear-gradient(315deg, rgba(255, 217, 0, 1) 3%, rgba(0, 46, 92, 1) 38%, rgba(0, 71, 153, 1) 68%, rgba(0, 15, 228, 1) 98%);
+  animation: ${gradient} 15s ease infinite;
+  background-size: 400% 400%;
+  background-attachment: fixed;
   color: #fff;
+  overflow: hidden;
 
   @media (max-width: 48em) {
     flex-direction: column;
+  }
+`;
+
+// Wave components
+const Wave = styled.div`
+  background: rgb(255 255 255 / 25%);
+  border-radius: 1000% 1000% 0 0;
+  position: fixed;
+  width: 200%;
+  height: 12em;
+  animation: ${wave} 10s -3s linear infinite;
+  transform: translate3d(0, 0, 0);
+  opacity: 0.8;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+
+  &:nth-of-type(2) {
+    bottom: -1.25em;
+    animation: ${wave} 18s linear reverse infinite;
+    opacity: 0.8;
+  }
+
+  &:nth-of-type(3) {
+    bottom: -2.5em;
+    animation: ${wave} 20s -1s reverse infinite;
+    opacity: 0.9;
   }
 `;
 
@@ -22,6 +85,7 @@ const ContentWrapper = styled.div`
   margin: 0 auto;
   display: flex;
   position: relative;
+  z-index: 2; /* Above the animated lines */
 
   @media (max-width: 48em) {
     width: 90vw;
@@ -50,7 +114,6 @@ const Left = styled.div`
     padding: 2rem;
     font-weight: 600;
     backdrop-filter: blur(2px);
-    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
   }
 
@@ -89,6 +152,7 @@ const Right = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 3; /* Above the animated lines */
 
   video {
     width: 100%;
@@ -136,6 +200,11 @@ const Title = styled.h1`
 const About = () => {
   return (
     <Section className="about">
+      {/* Animated waves background */}
+      <Wave />
+      <Wave />
+      <Wave />
+      
       <ContentWrapper>
         <Title>
         </Title>
@@ -161,10 +230,10 @@ const About = () => {
 
         <Right>
           <video 
-            src={img1} 
-            autoPlay 
-            muted 
-            loop 
+            src={img1}
+            autoPlay
+            muted
+            loop
             playsInline
           />
         </Right>
