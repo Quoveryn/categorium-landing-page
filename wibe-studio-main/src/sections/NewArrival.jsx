@@ -1,62 +1,117 @@
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import React, {  useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { useModal } from "../modals/ModalSt";
 
-import img1 from '../assets/Images/11.webp';
-import img2 from '../assets/Images/12.webp';
-import img3 from '../assets/Images/13.webp';
+// Imágenes eliminadas - ahora usamos componentes
+
+// Componente del Plan Básico en código
+const PlanBasicoCard = styled.div`
+  width: 400px;
+  height: 600px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-radius: 10px;
+  border: 2px solid #dee2e6;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 40px 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  }
+`;
+
+const PlanHeader = styled.div`
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dee2e6;
+`;
+
+const PlanTitle = styled.h1`
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1976d2;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: -1px;
+`;
+
+const PlanSubtitle = styled.h2`
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #000000;
+  margin: 5px 0 0 0;
+  font-family: 'Arial', sans-serif;
+`;
+
+const PlanFeatures = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+`;
+
+const FeatureItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.1rem;
+  color: #495057;
+  font-weight: 500;
+`;
+
+const CheckIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  background: #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  
+  &::after {
+    content: '✓';
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+`;
+
+const PlanBasicoComponent = ({ onClick, title = "BÁSICO", features }) => (
+  <PlanBasicoCard onClick={onClick}>
+    <PlanHeader>
+      <PlanTitle>PLAN</PlanTitle>
+      <PlanSubtitle>{title}</PlanSubtitle>
+    </PlanHeader>
+    
+    <PlanFeatures>
+      {features.map((feature, index) => (
+        <FeatureItem key={index}>
+          <CheckIcon />
+          {feature}
+        </FeatureItem>
+      ))}
+    </PlanFeatures>
+  </PlanBasicoCard>
+);
 
 const Section = styled.section`
+  position: relative;
   min-height: 100vh;
-  /* height: auto; */
   width: 100%;
   margin: 0 auto;
-  /* height: 300vh; */
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  position: relative;
-  /* background-color: ${(props) => props.theme.text}; */
-`;
-
-const Overlay = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 30vw;
-  height: 90vh;
-  box-shadow: 0 0 0 5vw ${(props) => props.theme.text};
-  border: 3px solid black;
-
-  z-index: 11;
-
-  @media (max-width: 70em) {
-  width: 40vw;
-
-    height: 80vh;
-  }
-
-  @media (max-width: 64em) {
-  width: 50vw;
-  box-shadow: 0 0 0 60vw ${(props) => props.theme.text};
-
-    height: 80vh;
-  }
-  @media (max-width: 48em) {
-  width: 60vw;
-
-    height: 80vh;
-  }
-  @media (max-width: 30em) {
-  width: 80vw;
-
-    height: 60vh;
-  }
 `;
 
 const Container = styled.div`
@@ -65,52 +120,31 @@ const Container = styled.div`
   left: 50%;
   transform: translate(-50%, 0%);
   width: 25vw;
-  height: auto;
-  /* background-color: yellow; */
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 64em) {
-  width: 30vw;
-
-
-  }
-  @media (max-width: 48em) {
-  width: 40vw;
-
-  }
-  @media (max-width: 30em) {
-  width: 60vw;
-
-  }
+  @media (max-width: 64em) { width: 30vw; }
+  @media (max-width: 48em) { width: 40vw; }
+  @media (max-width: 30em) { width: 60vw; }
 `;
 
 const Title = styled(motion.h1)`
   font-size: ${(props) => props.theme.fontxxxl};
   font-family: 'Kaushan Script';
   font-weight: 300;
-  /* text-transform: capitalize; */
-  color: ${(props) => props.theme.body};
-  text-shadow: 1px 1px 1px ${(props) => props.theme.text};
-
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   position: absolute;
   top: 2rem;
-  left: 1rem;
+  left: 1.5rem;
   z-index: 15;
 
-  @media (max-width: 64em) {
-    font-size: ${(props) => props.theme.fontxxl};
-
-
-  }
-  @media (max-width: 48em) {
-    font-size: ${(props) => props.theme.fontxl};
-  
-  }
+  @media (max-width: 64em) { font-size: ${(props) => props.theme.fontxxl}; }
+  @media (max-width: 48em) { font-size: ${(props) => props.theme.fontxl}; }
 `;
+
 const Text = styled.div`
   width: 20%;
   font-size: ${(props) => props.theme.fontlg};
@@ -120,12 +154,10 @@ const Text = styled.div`
   top: 0;
   right: 0;
   z-index: 11;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 
-  @media (max-width: 48em) {
-    display: none;
-  
-  }
- 
+  @media (max-width: 48em) { display: none; }
 `;
 
 const Item = styled.div`
@@ -136,106 +168,112 @@ const Item = styled.div`
   margin: 5rem 0;
 
   h2 {
-  }
-
-  img {
-    width: 100%;
-    height: auto;
-    z-index: 5;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
   }
 `;
-const Photos = ({ img, name }) => {
-  return (
-    <Item>
-      <img width="400" height="600" src={img} alt={name} />
-      <h2>{name}</h2>
-    </Item>
-  );
-};
+
+const Photos = ({ img, name, onClick, isPlan = false, planType, planFeatures }) => (
+  <Item>
+    {isPlan ? (
+      <PlanBasicoComponent onClick={onClick} title={planType} features={planFeatures} />
+    ) : (
+      <img width="400" height="600" src={img} alt={name} onClick={onClick} style={{
+        cursor: 'pointer',
+        zIndex: 5,
+        borderRadius: '10px',
+        transition: 'transform 0.3s'
+      }} />
+    )}
+    <h2>{name}</h2>
+  </Item>
+);
 
 const NewArrival = () => {
-   gsap.registerPlugin(ScrollTrigger);
+  const { openModal } = useModal();
+  gsap.registerPlugin(ScrollTrigger);
   const ref = useRef(null);
-
   const ScrollingRef = useRef(null);
-
 
   useLayoutEffect(() => {
     let element = ref.current;
-
     let scrollingElement = ScrollingRef.current;
-let t1= gsap.timeline();
+    let t1 = gsap.timeline();
+
     setTimeout(() => {
       let mainHeight = scrollingElement.scrollHeight;
-      element.style.height = `calc(${mainHeight / 4}px)`;
+      element.style.height = `calc(${mainHeight / 2.5}px)`; // Reducido de /4 a /2.5
+
       t1.to(element, {
         scrollTrigger: {
           trigger: element,
           start: 'top top',
-          end: 'bottom+=100% top-=100%',
-          scroller: '.App', //locomotive-scroll
+          end: 'bottom+=50% top-=100%', // Reducido de 100% a 50%
+          scroller: '.App',
           scrub: 1,
           pin: true,
-          // markers: true,
         },
         ease: 'none',
       });
 
       t1.fromTo(
         scrollingElement,
+        { y: '0' },
         {
-          y: '0',
-        },
-        {
-          y: '-100%',
+          y: '-50%', // Reducido de -100% a -50%
           scrollTrigger: {
-            // id: `section-${index + 1}`,
             trigger: scrollingElement,
             start: 'top top',
             end: 'bottom top',
             scroller: '.App',
             scrub: 1,
-            // markers: true,
           },
-        },
+        }
       );
 
       ScrollTrigger.refresh();
     }, 1000);
+
     ScrollTrigger.refresh();
 
-    return () => {
-      t1.kill();
-      ScrollTrigger.kill();
-    };
+    return () => { t1.kill(); ScrollTrigger.kill(); };
   }, []);
 
   return (
-    <Section  ref={ref} id="fixed-target" className="new-arrival">
-      <Overlay />
-
-      <Title
-        data-scroll data-scroll-speed="-2" data-scroll-direction="horizontal"
-      >
+    <Section ref={ref} id="fixed-target" className="new-arrival">
+      <Title data-scroll data-scroll-speed="-2" data-scroll-direction="horizontal">
         Suscripcion
-              </Title>
-
+      </Title>
       <Container ref={ScrollingRef}>
-        <Photos img={img1} name="Denim" />
-        <Photos img={img2} name="Cool Dresses" />
-        <Photos img={img3} name="Jackets" />
-     
+        <Photos 
+          name="Plan Básico" 
+          onClick={() => openModal('planbasico')} 
+          isPlan={true} 
+          planType="BÁSICO"
+          planFeatures={[
+            'Soporte y Mantenimiento',
+            'Característica dos',
+            'Característica tres',
+            'Característica cuatro',
+            'Característica cinco'
+          ]}
+        />
+        <Photos 
+          name="Plan Premium" 
+          onClick={() => openModal('planpremium')} 
+          isPlan={true} 
+          planType="PREMIUM"
+          planFeatures={[
+            'Todo del plan básico',
+            'Soporte prioritario 24/7',
+            'Funciones avanzadas',
+            'Análisis detallados',
+            'Personalización completa'
+          ]}
+        />
       </Container>
-
       <Text data-scroll data-scroll-speed="-4">
-        te ofrecemos planes de suscripción flexibles y accesibles, 
-        pensados para que encuentres el equilibrio perfecto entre funcionalidades y presupuesto.
-        <br />
-        <br />
-        Ya seas una organización pequeña que está dando sus primeros pasos 
-        o una federación consolidada que necesita automatizar procesos complejos, tenemos un plan pensado para vos.
-        <br />
-        <br />
+        te ofrecemos planes de suscripción flexibles y accesibles...
       </Text>
     </Section>
   );

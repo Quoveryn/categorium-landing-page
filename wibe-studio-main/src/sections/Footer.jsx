@@ -14,7 +14,6 @@ const Section = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
 
   background-color: #024D65;
   color: ${(props) => props.theme.text};
@@ -170,18 +169,10 @@ const Footer = () => {
           </li>
         </ul>
         <Bottom>
-          <span
-            data-scroll
-            data-scroll-speed="2"
-            data-scroll-direction="horizontal"
-          >
+          <span>
             &copy; 2025. All Rights Reserved.
           </span>
-          <span
-            data-scroll
-            data-scroll-speed="-2"
-            data-scroll-direction="horizontal"
-          >
+          <span>
             Made with by
             <a
               href="http://devdreaming.com"

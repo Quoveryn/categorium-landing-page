@@ -1,39 +1,13 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 
-import img1 from "../assets/Images/videoejemploabout.mp4";
-
-// Gradient animation
-const gradient = keyframes`
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-`;
-
-// Wave animation
-const wave = keyframes`
-  2% {
-    transform: translateX(1);
-  }
-  25% {
-    transform: translateX(-25%);
-  }
-  50% {
-    transform: translateX(-50%);
-  }
-  75% {
-    transform: translateX(-25%);
-  }
-  100% {
-    transform: translateX(1);
-  }
-`;
+import monitor from "../assets/Images/monitor.png";
+import telefono from "../assets/Images/telefono.png";
+import video1 from "../assets/Images/video1.mp4";
+import video2 from "../assets/Images/video2.mp4";
+import video3 from "../assets/Images/video3.mp4";
+import video4 from "../assets/Images/video4.mp4";
+import video5 from "../assets/Images/video5.mp4";
 
 const Section = styled.section`
   min-height: 100vh;
@@ -41,42 +15,11 @@ const Section = styled.section`
   margin: 0;
   position: relative;
   display: flex;
-  background: linear-gradient(315deg, rgba(255, 217, 0, 1) 3%, rgba(0, 46, 92, 1) 38%, rgba(0, 71, 153, 1) 68%, rgba(0, 15, 228, 1) 98%);
-  animation: ${gradient} 15s ease infinite;
-  background-size: 400% 400%;
-  background-attachment: fixed;
   color: #fff;
   overflow: hidden;
-
+  
   @media (max-width: 48em) {
     flex-direction: column;
-  }
-`;
-
-// Wave components
-const Wave = styled.div`
-  background: rgb(255 255 255 / 25%);
-  border-radius: 1000% 1000% 0 0;
-  position: fixed;
-  width: 200%;
-  height: 12em;
-  animation: ${wave} 10s -3s linear infinite;
-  transform: translate3d(0, 0, 0);
-  opacity: 0.8;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-
-  &:nth-of-type(2) {
-    bottom: -1.25em;
-    animation: ${wave} 18s linear reverse infinite;
-    opacity: 0.8;
-  }
-
-  &:nth-of-type(3) {
-    bottom: -2.5em;
-    animation: ${wave} 20s -1s reverse infinite;
-    opacity: 0.9;
   }
 `;
 
@@ -85,7 +28,7 @@ const ContentWrapper = styled.div`
   margin: 0 auto;
   display: flex;
   position: relative;
-  z-index: 2; /* Above the animated lines */
+  z-index: 2;
 
   @media (max-width: 48em) {
     width: 90vw;
@@ -106,7 +49,7 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   color: #fff;
-
+  
   @media (max-width: 64em) {
     width: 100%;
     text-align: center;
@@ -128,47 +71,155 @@ const Left = styled.div`
   }
 `;
 
-const List = styled.ul`
-  list-style: none;
-  padding-left: 0;
-  margin-top: 2rem;
-
-  li {
-    margin-bottom: 1rem;
-    font-weight: 400;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-
-    &::before {
-      content: "✔️";
-      margin-right: 0.5rem;
-    }
-  }
-`;
-
 const Right = styled.div`
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3; /* Above the animated lines */
-
-  video {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-  }
+  z-index: 3;
+  position: relative;
 
   @media (max-width: 64em) {
     width: 100%;
     margin-top: 2rem;
+  }
+`;
 
-    video {
-      max-width: 90%;
-    }
+const DeviceContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  @media (max-width: 48em) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+`;
+
+const MonitorContainer = styled.div`
+  position: relative;
+  max-width: 780px;
+  width: 100%;
+
+  @media (max-width: 64em) {
+    max-width: 350px;
+  }
+
+  @media (max-width: 48em) {
+    max-width: 300px;
+  }
+`;
+
+const Monitor = styled.img`
+  width: 100%;
+  height: auto;
+  z-index: 2;
+  position: relative;
+`;
+
+const VideoContainer = styled.div`
+  position: absolute;
+  /* Coordenadas ajustadas para cubrir exactamente la pantalla del monitor */
+  top: 19%; /* Más arriba para cubrir todo el área de la pantalla */
+  left: 10%; /* Más a la izquierda */
+  width: 82%; /* Más ancho para cubrir toda la pantalla */
+  height: 45%; /* Más alto para cubrir toda la pantalla */
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 2px; /* Radio pequeño para coincidir con la pantalla */
+  
+  /* Ajustar para pantallas más pequeñas */
+  @media (max-width: 64em) {
+    top: 6.8%;
+    left: 11.2%;
+    width: 77.5%;
+    height: 67%;
+  }
+
+  @media (max-width: 48em) {
+    top: 7%;
+    left: 11.5%;
+    width: 77%;
+    height: 66%;
+  }
+`;
+
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* Fuerza el video a llenar todo el espacio, estirando si es necesario */
+  opacity: ${props => props.active ? 1 : 0};
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.5s ease-in-out;
+  border-radius: 2px; /* Coincide con el border-radius del container */
+`;
+
+const PhoneContainer = styled.div`
+  position: relative;
+  max-width: 220px;
+  width: 100%;
+
+  @media (max-width: 64em) {
+    max-width: 100px;
+  }
+
+  @media (max-width: 48em) {
+    max-width: 150px;
+    margin-top: -2rem;
+  }
+`;
+
+const Phone = styled.img`
+  width: 100%;
+  height: auto;
+  z-index: 3;
+  position: relative;
+`;
+
+const PhoneVideoContainer = styled.div`
+  position: absolute;
+  /* Coordenadas ajustadas para la pantalla del teléfono */
+  top: 8%; /* Desde la parte superior del teléfono */
+  left: 27%; /* Desde la izquierda del teléfono */
+  width: 45%; /* Ancho de la pantalla del teléfono */
+  height: 84%; /* Alto de la pantalla del teléfono */
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 15px; /* Radio más grande para simular la pantalla curva del teléfono */
+  
+  @media (max-width: 64em) {
+    top: 8.5%;
+    left: 10.5%;
+    width: 60%;
+    height: 83%;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 48em) {
+    top: 8%;
+    left: 29%;
+    width: 40%;
+    height: 84%;
+    border-radius: 12px;
+  }
+`;
+
+const PhoneVideo = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 15px;
+  
+  @media (max-width: 64em) {
+    border-radius: 8px;
+  }
+
+  @media (max-width: 48em) {
+    border-radius: 12px;
   }
 `;
 
@@ -177,7 +228,7 @@ const Title = styled.h1`
   font-family: "Kaushan Script";
   font-weight: 300;
   position: absolute;
-  top: 1rem;
+  top: 3rem;
   left: 5%;
   z-index: 5;
   color: #fff;
@@ -198,16 +249,58 @@ const Title = styled.h1`
 `;
 
 const About = () => {
+  const [currentVideo, setCurrentVideo] = useState(0);
+  const videoRefs = useRef([]);
+  const phoneVideoRef = useRef(null);
+  
+  const videos = [video1, video2, video3, video4];
+  const phoneVideo = video5;
+
+  useEffect(() => {
+    const videoElements = videoRefs.current;
+
+    const handleVideoEnd = () => {
+      setCurrentVideo((prev) => (prev + 1) % videos.length);
+    };
+
+    // Agregar event listener al video actual
+    if (videoElements[currentVideo]) {
+      videoElements[currentVideo].addEventListener('ended', handleVideoEnd);
+    }
+
+    // Cleanup
+    return () => {
+      videoElements.forEach((video, index) => {
+        if (video) {
+          video.removeEventListener('ended', handleVideoEnd);
+        }
+      });
+    };
+  }, [currentVideo, videos.length]);
+
+  useEffect(() => {
+    // Reproducir el video actual y pausar los demás (monitor)
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        if (index === currentVideo) {
+          video.play();
+        } else {
+          video.pause();
+          video.currentTime = 0; // Reiniciar el video
+        }
+      }
+    });
+
+    // Reproducir video del teléfono en loop
+    if (phoneVideoRef.current) {
+      phoneVideoRef.current.play();
+    }
+  }, [currentVideo]);
+
   return (
     <Section className="about">
-      {/* Animated waves background */}
-      <Wave />
-      <Wave />
-      <Wave />
-      
       <ContentWrapper>
-        <Title>
-        </Title>
+        <Title></Title>
         <Left>
           <br />
           <p>
@@ -220,22 +313,45 @@ const About = () => {
             de jugadores y mucho más.
           </p>
           <br />
-          <List>
-            <li>Gestioná fichajes, calendarios, torneos, arbitrajes, estadísticas y mucho más.</li>
-            <li>Centralizá toda la información de tus jugadores, equipos y entrenadores.</li>
-            <li>Ahorrá tiempo con herramientas pensadas específicamente para el vóley.</li>
-            <li>Accedé a soporte técnico y actualizaciones constantes.</li>
-          </List>
         </Left>
 
         <Right>
-          <video 
-            src={img1}
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
+          <DeviceContainer>
+            <MonitorContainer>
+              <Monitor 
+                src={monitor} 
+                alt="Monitor mostrando la plataforma"
+              />
+              <VideoContainer>
+                {videos.map((videoSrc, index) => (
+                  <Video
+                    key={index}
+                    ref={el => videoRefs.current[index] = el}
+                    src={videoSrc}
+                    active={index === currentVideo}
+                    muted
+                    playsInline
+                  />
+                ))}
+              </VideoContainer>
+            </MonitorContainer>
+            
+            <PhoneContainer>
+              <Phone 
+                src={telefono} 
+                alt="Teléfono con la aplicación móvil"
+              />
+              <PhoneVideoContainer>
+                <PhoneVideo
+                  ref={phoneVideoRef}
+                  src={phoneVideo}
+                  muted
+                  loop
+                  playsInline
+                />
+              </PhoneVideoContainer>
+            </PhoneContainer>
+          </DeviceContainer>
         </Right>
       </ContentWrapper>
     </Section>
