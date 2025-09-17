@@ -21,8 +21,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "postinstall": "npx browserslist@latest --update-db || true",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "dev": "react-scripts start",
+    "start": "serve -s build -l $PORT",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
