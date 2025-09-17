@@ -18,8 +18,8 @@ import GlobalStyles from "./styles/GlobalStyles";
 import { dark } from "./styles/Themes";
 
 // Modal imports
-import { ModalProvider } from "./modals/ModalSt";
-import Modal from "./modals/Modalnewarrival";
+// import { ModalProvider } from "./modals/ModalSt";
+// import Modal from "./modals/Modalnewarrival";
 
 function App() {
   const containerRef = useRef(null);
