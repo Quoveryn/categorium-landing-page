@@ -1,4 +1,5 @@
 import { createGlobalStyle, keyframes } from "styled-components";
+
 const gradientAnimation = keyframes`
   0% { background-position: 0% 0%; }
   25% { background-position: 100% 0%; }

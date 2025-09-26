@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
 import MainVideo from "../assets/pruebaSeleccion.mp4";
-import ('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
+
 
 // Wrapper que aísla la sección del fondo global y partículas
 const CoverWrapper = styled.section`
@@ -10,6 +11,11 @@ const CoverWrapper = styled.section`
   height: 100vh;
   position: relative;
   z-index: 10;
+  
+  /* Asegurar que la fuente esté disponible */
+  * {
+    font-family: inherit;
+  }
 
   &::before,
   &::after {
@@ -66,18 +72,26 @@ const Title = styled(motion.div)`
   }
 
   h1 {
-    font-family: "Kaushan Script", cursive !important; /* Forzar la fuente Kaushan Script */
+    /* Aplicar la fuente Pacifico con fallbacks */
+    font-family: "Pacifico", "Kaushan Script", cursive !important;
     font-size: ${(props) => props.theme.fontBig};
+    font-weight: 400; /* Peso específico de Pacifico */
     text-shadow: 1px 1px 1px ${(props) => props.theme.body};
+    letter-spacing: 1px; /* Espaciado ajustado para Pacifico */
 
     @media (max-width: 30em) {
       font-size: calc(3rem + 8vw);
+      left: 5%;
+    }
+    @media (max-width: 48em) {
+      font-size: calc(3rem + 8vw);
+      left: 5%;
     }
   }
 
   h2 {
     font-size: ${(props) => props.theme.fontlg};
-    font-family: "Sirin Stencil";
+    font-family: "Sirin Stencil", sans-serif;
     font-weight: 500;
     text-shadow: 1px 1px 1px ${(props) => props.theme.body};
     margin: 0 auto;
@@ -85,8 +99,18 @@ const Title = styled(motion.div)`
 
     @media (max-width: 30em) {
       font-size: ${(props) => props.theme.fontmd};
-      margin-top: -1.5rem;
+      margin-top: 1rem;
     }
+    @media (max-width: 48em) {
+      font-size: ${(props) => props.theme.fontmd};
+      margin-top: 1rem;
+    }
+      @media (max-width: 64em) {
+      font-size: ${(props) => props.theme.fontmd};
+      margin-top: 1rem;
+    }
+  }
+
   }
 `;
 

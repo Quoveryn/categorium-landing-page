@@ -5,9 +5,8 @@ import React, { useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useModal } from "../modals/ModalSt";
 
-// Imágenes eliminadas - ahora usamos componentes
 
-// Componente del Plan Básico en código
+
 const PlanBasicoCard = styled.div`
   width: 400px;
   height: 600px;
@@ -272,9 +271,6 @@ const NewArrival = () => {
           ]}
         />
       </Container>
-      <Text data-scroll data-scroll-speed="-4">
-        te ofrecemos planes de suscripción flexibles y accesibles...
-      </Text>
     </Section>
   );
 };
