@@ -5,18 +5,16 @@ import React, { useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useModal } from "../modals/ModalSt";
 
-
-
 const PlanBasicoCard = styled.div`
-  width: 400px;
-  height: 600px;
+  width: 280px;
+  height: 420px;
   background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
   border-radius: 10px;
   border: 2px solid #dee2e6;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  padding: 40px 30px;
+  padding: 25px 20px;
   cursor: pointer;
   transition: transform 0.3s ease;
   
@@ -24,52 +22,93 @@ const PlanBasicoCard = styled.div`
     transform: scale(1.05);
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   }
+
+  @media (max-width: 48em) {
+    width: 240px;
+    height: 380px;
+    padding: 20px 18px;
+  }
+
+  @media (max-width: 30em) {
+    width: 220px;
+    height: 360px;
+    padding: 18px 15px;
+  }
 `;
 
 const PlanHeader = styled.div`
   text-align: center;
-  margin-bottom: 40px;
-  padding-bottom: 20px;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
   border-bottom: 1px solid #dee2e6;
 `;
 
 const PlanTitle = styled.h1`
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #1976d2;
   margin: 0;
   font-family: 'Arial', sans-serif;
   letter-spacing: -1px;
+
+  @media (max-width: 48em) {
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: 30em) {
+    font-size: 1.4rem;
+  }
 `;
 
 const PlanSubtitle = styled.h2`
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: #000000;
   margin: 5px 0 0 0;
   font-family: 'Arial', sans-serif;
+
+  @media (max-width: 48em) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 30em) {
+    font-size: 1.1rem;
+  }
 `;
 
 const PlanFeatures = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-top: 10px;
+  gap: 10px;
+  margin-top: 8px;
+
+  @media (max-width: 30em) {
+    gap: 8px;
+  }
 `;
 
 const FeatureItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 1.1rem;
+  gap: 10px;
+  font-size: 0.9rem;
   color: #495057;
   font-weight: 500;
+
+  @media (max-width: 48em) {
+    font-size: 0.85rem;
+    gap: 8px;
+  }
+
+  @media (max-width: 30em) {
+    font-size: 0.8rem;
+  }
 `;
 
 const CheckIcon = styled.div`
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   background: #007bff;
   border-radius: 50%;
   display: flex;
@@ -81,7 +120,16 @@ const CheckIcon = styled.div`
     content: '✓';
     color: white;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 30em) {
+    width: 18px;
+    height: 18px;
+
+    &::after {
+      font-size: 11px;
+    }
   }
 `;
 
@@ -129,19 +177,25 @@ const Container = styled.div`
   @media (max-width: 30em) { width: 60vw; }
 `;
 
-const Title = styled(motion.h1)`
+const Title = styled.h1`
   font-size: ${(props) => props.theme.fontxxxl};
-  font-family: 'Kaushan Script';
-  font-weight: 300;
+  font-family: 'Arial', sans-serif;
+  font-weight: 600;
   color: #fff;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   position: absolute;
-  top: 2rem;
+  top: 1rem;
   left: 1.5rem;
   z-index: 15;
 
-  @media (max-width: 64em) { font-size: ${(props) => props.theme.fontxxl}; }
-  @media (max-width: 48em) { font-size: ${(props) => props.theme.fontxl}; }
+  @media (max-width: 64em) { 
+    font-size: ${(props) => props.theme.fontxxl}; 
+    top: 0.8rem;
+  }
+  @media (max-width: 48em) { 
+    font-size: ${(props) => props.theme.fontxl}; 
+    top: 0.5rem;
+  }
 `;
 
 const Text = styled.div`
@@ -164,11 +218,21 @@ const Item = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 5rem 0;
+  margin: 4rem 0;
 
   h2 {
     color: #fff;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    font-size: 1.5rem;
+    margin-top: 1rem;
+
+    @media (max-width: 48em) {
+      font-size: 1.3rem;
+    }
+
+    @media (max-width: 30em) {
+      font-size: 1.1rem;
+    }
   }
 `;
 
@@ -177,7 +241,7 @@ const Photos = ({ img, name, onClick, isPlan = false, planType, planFeatures }) 
     {isPlan ? (
       <PlanBasicoComponent onClick={onClick} title={planType} features={planFeatures} />
     ) : (
-      <img width="400" height="600" src={img} alt={name} onClick={onClick} style={{
+      <img width="280" height="420" src={img} alt={name} onClick={onClick} style={{
         cursor: 'pointer',
         zIndex: 5,
         borderRadius: '10px',
@@ -201,13 +265,13 @@ const NewArrival = () => {
 
     setTimeout(() => {
       let mainHeight = scrollingElement.scrollHeight;
-      element.style.height = `calc(${mainHeight / 2.5}px)`; // Reducido de /4 a /2.5
+      element.style.height = `calc(${mainHeight / 2.5}px)`;
 
       t1.to(element, {
         scrollTrigger: {
           trigger: element,
           start: 'top top',
-          end: 'bottom+=50% top-=100%', // Reducido de 100% a 50%
+          end: 'bottom+=50% top-=100%',
           scroller: '.App',
           scrub: 1,
           pin: true,
@@ -219,7 +283,7 @@ const NewArrival = () => {
         scrollingElement,
         { y: '0' },
         {
-          y: '-50%', // Reducido de -100% a -50%
+          y: '-50%',
           scrollTrigger: {
             trigger: scrollingElement,
             start: 'top top',

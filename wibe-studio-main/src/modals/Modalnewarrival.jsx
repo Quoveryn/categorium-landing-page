@@ -19,11 +19,11 @@ const Overlay = styled(motion.div)`
 
 const ModalContent = styled(motion.div)`
   width: 90%;
-  max-width: 900px;
-  max-height: 90vh;
+  max-width: 700px;
+  max-height: 85vh;
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   border-radius: 20px;
-  overflow: hidden;
+  overflow-y: auto;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
   position: relative;
 
@@ -33,8 +33,14 @@ const ModalContent = styled(motion.div)`
   }
 
   @media (max-width: 768px) {
-    width: 95%;
-    max-height: 95vh;
+    width: 85%;
+    max-width: 500px;
+    max-height: 80vh;
+  }
+
+  @media (max-width: 480px) {
+    width: 90%;
+    max-width: 400px;
   }
 `;
 
@@ -80,89 +86,109 @@ const SubscriptionCard = styled.div`
 
 const Header = styled.div`
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   border-bottom: 2px solid #e9ecef;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 `;
 
 const PlanTitle = styled.h1`
-  font-size: 3.5rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: #1976d2;
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;
   font-family: 'Arial', sans-serif;
   letter-spacing: -2px;
 
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
   }
 `;
 
 const PlanSubtitle = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 600;
   color: #000;
   margin: 0;
   font-family: 'Arial', sans-serif;
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
   }
 `;
 
 const PlanPrice = styled.div`
-  margin-top: 20px;
+  margin-top: 15px;
   
   .price {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: #1976d2;
     
     @media (max-width: 768px) {
-      font-size: 2.5rem;
+      font-size: 2rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.8rem;
     }
   }
   
   .period {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #666;
     font-weight: 400;
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
   }
 `;
 
 const FeaturesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin: 40px 0;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 25px 0;
   flex: 1;
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 15px;
-    margin: 30px 0;
+    gap: 10px;
+    margin: 20px 0;
   }
 `;
 
 const FeatureItem = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 15px;
-  padding: 15px;
+  gap: 12px;
+  padding: 12px;
   background: rgba(25, 118, 210, 0.05);
-  border-radius: 10px;
-  border-left: 4px solid #1976d2;
+  border-radius: 8px;
+  border-left: 3px solid #1976d2;
   transition: transform 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(25, 118, 210, 0.15);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.15);
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    gap: 10px;
   }
 `;
 
 const CheckIcon = styled.div`
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   background: #1976d2;
   border-radius: 50%;
   display: flex;
@@ -175,30 +201,48 @@ const CheckIcon = styled.div`
     content: '✓';
     color: white;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    width: 20px;
+    height: 20px;
+    
+    &::after {
+      font-size: 12px;
+    }
   }
 `;
 
 const FeatureText = styled.div`
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #333;
   font-weight: 500;
   line-height: 1.4;
+
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 40px;
-  padding-top: 30px;
+  margin-top: 25px;
+  padding-top: 20px;
   border-top: 1px solid #e9ecef;
+
+  @media (max-width: 480px) {
+    margin-top: 20px;
+    padding-top: 15px;
+  }
 `;
 
 const SubscribeButton = styled.a`
   background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
   color: white;
-  padding: 18px 60px;
-  font-size: 1.3rem;
+  padding: 15px 50px;
+  font-size: 1.2rem;
   font-weight: 600;
   border: none;
   border-radius: 50px;
@@ -220,26 +264,35 @@ const SubscribeButton = styled.a`
   }
 
   @media (max-width: 768px) {
-    padding: 15px 40px;
+    padding: 14px 40px;
     font-size: 1.1rem;
-    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px 30px;
+    font-size: 1rem;
+    width: 90%;
   }
 `;
 
 const Badge = styled.div`
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 15px;
+  left: 15px;
   background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
   color: white;
-  padding: 8px 16px;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
-`;
+  letter-spacing: 0.5px;
 
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+  }
+`;
 
 const planData = {
   planbasico: {
@@ -337,7 +390,6 @@ const Modalnewarrival = () => {
             exit={{ scale: 0.7, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
-            {}
             {(modalContent === 'planbasico' || modalContent === 'planpremium') ? 
               renderSubscriptionModal(modalContent) :
               modalContent && <img src={modalContent} alt="Modal Content" />
