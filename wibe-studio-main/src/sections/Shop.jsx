@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import React, { useLayoutEffect, useRef } from "react";
-import styled, { keyframes } from "styled-components";
+import { useLayoutEffect, useRef } from "react";
+import styled from "styled-components";
 
 const Section = styled(motion.section)`
   min-height: 100vh;
@@ -16,77 +16,77 @@ const Section = styled(motion.section)`
   z-index: 0;
 `;
 
-const Title = styled.h1`
-  font-size: ${(props) => props.theme.fontxxxl};
-  font-family: "Kaushan Script";
-  font-weight: 300;
-  color: #fff;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  position: absolute;
-  top: 1rem;
-  left: 5%;
-  z-index: 11;
+// const Title = styled.h1`
+//   font-size: ${(props) => props.theme.fontxxxl};
+//   font-family: "Kaushan Script";
+//   font-weight: 300;
+//   color: #fff;
+//   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+//   position: absolute;
+//   top: 1rem;
+//   left: 5%;
+//   z-index: 11;
 
-  @media (max-width:64em){display:none;}
-  @media (max-width:48em){display:none;}
-`;
+//   @media (max-width:64em){display:none;}
+//   @media (max-width:48em){display:none;}
+// `;
 
-const Left = styled.div`
-  width: 35%;
-  background-color: rgba(2,46,61,0.8);
-  color:#fff;
-  min-height:100vh;
-  z-index:10;
-  position:fixed;
-  left:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  backdrop-filter:blur(10px);
+// const Left = styled.div`
+//   width: 35%;
+//   background-color: rgba(2,46,61,0.8);
+//   color:#fff;
+//   min-height:100vh;
+//   z-index:10;
+//   position:fixed;
+//   left:0;
+//   display:flex;
+//   justify-content:center;
+//   align-items:center;
+//   backdrop-filter:blur(10px);
 
-  p{
-    font-size:${(p)=>p.theme.fontlg};
-    font-weight:300;
-    width:80%;
-    margin:0 auto;
-    text-shadow:1px 1px 2px rgba(0,0,0,0.3);
-  }
-  @media (max-width:64em){
-    p{font-size:${(p)=>p.theme.fontmd};}
-  }
-  @media (max-width:48em){display:none;}
-`;
+//   p{
+//     font-size:${(p)=>p.theme.fontlg};
+//     font-weight:300;
+//     width:80%;
+//     margin:0 auto;
+//     text-shadow:1px 1px 2px rgba(0,0,0,0.3);
+//   }
+//   @media (max-width:64em){
+//     p{font-size:${(p)=>p.theme.fontmd};}
+//   }
+//   @media (max-width:48em){display:none;}
+// `;
 
 const Right = styled.div`
-  position:absolute;
-  left:35%;
-  padding-left:30%;
-  min-height:100vh;
-  display:flex;
-  justify-content:flex-start;
-  align-items:center;
+  position: absolute;
+  left: 35%;
+  padding-left: 30%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 
-  @media (max-width:48em){
-    left:0;
-    padding-left:5%;
-    width:100%;
-    justify-content:flex-start;
+  @media (max-width: 48em) {
+    left: 0;
+    padding-left: 5%;
+    width: 100%;
+    justify-content: flex-start;
   }
 `;
 
 const Item = styled(motion.div)`
-  display:inline-block;
-  width:20rem;
-  margin-right:6rem;
-  z-index:2;
+  display: inline-block;
+  width: 20rem;
+  margin-right: 6rem;
+  z-index: 2;
 
-  @media (max-width:48em){
-    width:15rem;
-    margin-right:3rem;
+  @media (max-width: 48em) {
+    width: 15rem;
+    margin-right: 3rem;
   }
-  @media (max-width:30em){
-    width:12rem;
-    margin-right:2rem;
+  @media (max-width: 30em) {
+    width: 12rem;
+    margin-right: 2rem;
   }
 `;
 
@@ -96,7 +96,7 @@ const FeatureCard = styled.div`
   background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
   border-radius: 15px;
   border: 3px solid #ffc107;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -109,22 +109,27 @@ const FeatureCard = styled.div`
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
   }
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -50%;
     right: -50%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, transparent 40%, rgba(255, 193, 7, 0.1) 50%, transparent 60%);
+    background: linear-gradient(
+      45deg,
+      transparent 40%,
+      rgba(255, 193, 7, 0.1) 50%,
+      transparent 60%
+    );
     transform: rotate(45deg);
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -141,10 +146,10 @@ const CardTitle = styled.h2`
   color: #ffffff;
   text-align: center;
   line-height: 1.3;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   z-index: 2;
   position: relative;
-  
+
   @media (max-width: 48em) {
     font-size: 1.1rem;
   }
@@ -164,7 +169,7 @@ const CardIcon = styled.div`
   position: relative;
 
   &::after {
-    content: '🏐';
+    content: "🏐";
     font-size: 2rem;
     color: #ffc107;
   }
@@ -172,7 +177,7 @@ const CardIcon = styled.div`
   @media (max-width: 48em) {
     width: 60px;
     height: 60px;
-    
+
     &::after {
       font-size: 1.5rem;
     }
@@ -265,7 +270,6 @@ const Shop = () => {
 
   return (
     <Section ref={ref} id="shop">
-
       <Right data-scroll ref={Horizontalref}>
         <Product title="AGREGAR EQUIPOS, DIVISIONES Y ESTADIOS" />
         <Product title="ROUND ROBIN" />

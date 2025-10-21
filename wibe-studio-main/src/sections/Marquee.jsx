@@ -1,7 +1,5 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
-
-
+// import React from 'react';
+import styled from "styled-components";
 
 const Section = styled.section`
 -  min-height: 100vh;
@@ -16,7 +14,6 @@ const Section = styled.section`
    position: relative;
 `;
 
-
 const Container = styled.div`
   min-height: 100vh;
   display: flex;
@@ -26,31 +23,31 @@ const Container = styled.div`
   position: relative;
   z-index: 2;
 
-  @media (max-width: 64em){
+  @media (max-width: 64em) {
     justify-content: center;
   }
 `;
 
 const Banner = styled.h1`
   font-size: ${(props) => props.theme.fontxxxl};
-  font-family: 'Kaushan Script';
+  font-family: "Kaushan Script";
   color: white;
   white-space: nowrap;
   text-transform: uppercase;
   line-height: 1;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 
-  @media (max-width: 70em){
+  @media (max-width: 70em) {
     font-size: ${(props) => props.theme.fontxxl};
   }
-  @media (max-width: 64em){
+  @media (max-width: 64em) {
     margin: 1rem 0;
-  }   
-  @media (max-width: 48em){
+  }
+  @media (max-width: 48em) {
     font-size: ${(props) => props.theme.fontxl};
     margin: 0.5rem 0;
   }
-  @media (max-width: 30em){
+  @media (max-width: 30em) {
     font-size: ${(props) => props.theme.fontlg};
   }
 
@@ -79,14 +76,18 @@ const Marquee = () => {
             LA VIDA ME DIO DOS PIERNAS
           </span>
         </Banner>
-        <Banner data-scroll data-scroll-speed="-2" data-scroll-target="#direction">
+        <Banner
+          data-scroll
+          data-scroll-speed="-2"
+          data-scroll-target="#direction"
+        >
           <span
             data-scroll
             data-scroll-direction="horizontal"
             data-scroll-speed="-6"
             data-scroll-target="#direction"
           >
-           PARA JUGAR AL FUTBOL
+            PARA JUGAR AL FUTBOL
           </span>
         </Banner>
         <Banner>
@@ -109,7 +110,11 @@ const Marquee = () => {
             A LA QUE
           </span>
         </Banner>
-        <Banner data-scroll data-scroll-speed="6" data-scroll-target="#direction">
+        <Banner
+          data-scroll
+          data-scroll-speed="6"
+          data-scroll-target="#direction"
+        >
           <span
             data-scroll
             data-scroll-direction="horizontal"
